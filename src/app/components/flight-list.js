@@ -92,7 +92,9 @@ export function FlightList(data) {
                 <div className="flex flex-col p-2 text-gray-600">
                   <div className="text-lg font-bold">
                     {index + 1} -{" "}
-                    <span className="text-blue-600">{results.origin.name}, {results.origin.country}</span>
+                    <span className="text-blue-600">
+                      {results.origin.name}, {results.origin.country}
+                    </span>
                   </div>
 
                   <div className="flex flex-row gap-4">
@@ -155,13 +157,7 @@ export function FlightList(data) {
                       <div>
                         <span className="font-bold">Flight Number: </span>
                         <span className="text-blue-600">
-                        {results.flightNumber}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="font-bold">Operating Carrier: </span>
-                        <span className="text-blue-600">
-                          
+                          {results.flightNumber}
                         </span>
                       </div>
                     </div>
