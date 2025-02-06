@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { FlightList } from "../components/flight-list";
-import Spinner from "./spinner";
+import Spinner from "../../components/ui/spinner";
+import BtnSpinner from "../../components/ui/button-spinner";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -247,9 +248,9 @@ export default function SearchFL() {
             </div>
             <button
               onClick={searchFlights}
-              className="bg-blue-500 text-white py-2 px-4 rounded font-bold text-lg z-10"
+              className="bg-blue-500 text-white py-2 px-4 rounded text-lg z-10 shadow-lg hover:shadow-inner"
             >
-              Search Flights
+              {loadingFlight ? <BtnSpinner /> : "Search Flights"}
             </button>
           </form>
         </div>
@@ -259,12 +260,6 @@ export default function SearchFL() {
             <div className="flex justify-center ">Wait...</div>
           </div>
         )}
-        {loadingFlight && (
-          <div className="flex justify-center text-2xl text-blue-600 font-bold my-10">
-            <Spinner />
-          </div>
-        )}
-
         {flightResults.status && <FlightList data={flightResults} />}
       </LocalizationProvider>
     </div>

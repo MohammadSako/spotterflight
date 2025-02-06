@@ -7,17 +7,20 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Image from "next/image";
 
 export function FlightList(data) {
+  console.log(data);
+
   return (
-    <div className="mt-10">
+    <div className="mt-10 ">
       {data.data.data.itineraries.map((result, index) => (
         <Accordion key={index}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1-content"
             id="panel1-header"
+            className=" shadow-md"
           >
             <Typography component="span">
-              <div className="flex flex-row gap-20 ">
+              <div className="flex flex-row gap-20">
                 <Image
                   width={50}
                   height={50}
@@ -86,9 +89,82 @@ export function FlightList(data) {
             <div>Airport Changes In:</div>
             {result.legs[0].segments.map((results, index) => (
               <div key={results.id}>
-                <div className="flex flex-row justify-between items-center px-4 text-gray-600">
-                  <div>
-                    {index + 1} - {results.origin.name}
+                <div className="flex flex-col p-2 text-gray-600">
+                  <div className="text-lg font-bold">
+                    {index + 1} -{" "}
+                    <span className="text-blue-600">{results.origin.name}, {results.origin.country}</span>
+                  </div>
+
+                  <div className="flex flex-row gap-4">
+                    <div className="flex flex-col gap-1">
+                      <div>
+                        <span className="font-bold">Departure: </span>
+                        <span className="text-blue-600">
+                          {(() => {
+                            const dateString = results.departure;
+                            const date = new Date(dateString);
+                            const hours = date.toLocaleDateString("en-US", {
+                              weekday: "short",
+                              month: "short",
+                              day: "numeric",
+                              hour: "numeric",
+                              minute: "numeric",
+                            });
+                            return `${hours}`;
+                          })()}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="font-bold">Arrival: </span>
+                        <span className="text-blue-600">
+                          {(() => {
+                            const dateString = results.arrival;
+                            const date = new Date(dateString);
+                            const hours = date.toLocaleDateString("en-US", {
+                              weekday: "short",
+                              month: "short",
+                              day: "numeric",
+                              hour: "numeric",
+                              minute: "numeric",
+                            });
+                            return `${hours}`;
+                          })()}
+                        </span>
+                      </div>
+                    </div>
+                    <div>
+                      <div>
+                        <span className="font-bold">Travel time: </span>
+                        <span className="text-blue-600">
+                          {(() => {
+                            const totalMinutes = results.durationInMinutes;
+                            const hours = Math.floor(totalMinutes / 60);
+                            const minutes = totalMinutes % 60;
+                            return `${hours}h ${minutes}min`;
+                          })()}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="font-bold">Operating Carrier: </span>
+                        <span className="text-blue-600">
+                          {results.operatingCarrier.name}
+                        </span>
+                      </div>
+                    </div>
+                    <div>
+                      <div>
+                        <span className="font-bold">Flight Number: </span>
+                        <span className="text-blue-600">
+                        {results.flightNumber}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="font-bold">Operating Carrier: </span>
+                        <span className="text-blue-600">
+                          
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
