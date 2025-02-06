@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FlightList } from "../components/flight-list";
 import Spinner from "./spinner";
@@ -8,7 +7,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import * as React from "react";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
@@ -37,8 +36,6 @@ export default function SearchFL() {
   const departureData = departure.format("YYYY-MM-DD");
   const returnData = returns.format("YYYY-MM-DD");
 
-  console.log("Flight Results:", flightResults);
-  // Function to search for flights based on the selected airport data.
   function searchFlights() {
     const url = `https://sky-scrapper.p.rapidapi.com/api/v2/flights/searchFlights?originSkyId=${fromSkyId}&destinationSkyId=${toSkyId}&originEntityId=${fromEntityId}&destinationEntityId=${toEntityId}&date=${departureData}&returnDate=${returnData}&adults=${age}&sortBy=best&currency=USD&market=en-US&countryCode=US`;
     const options = {
@@ -81,7 +78,6 @@ export default function SearchFL() {
         const response = await fetch(url, options);
         const result = await response.json();
         setAirports(result.data || []);
-        // Clear both results dropdowns on initial load.
         setFromResults([]);
         setToResults([]);
       } catch (error) {
@@ -93,7 +89,6 @@ export default function SearchFL() {
     fetchAirportData(url, options);
   }, []);
 
-  // Handlers for the "Where from?" field.
   const WherefromHandle = (e) => {
     const searchTerm = e.target.value;
     setWherefrom(searchTerm);
@@ -107,7 +102,6 @@ export default function SearchFL() {
     }
   };
 
-  // Handlers for the "Where to?" field.
   const WheretoHandle = (e) => {
     const searchTerm = e.target.value;
     setWhereTo(searchTerm);
@@ -121,7 +115,6 @@ export default function SearchFL() {
     }
   };
 
-  // When a "where from" result is selected.
   const fromHandleSelect = (selectedItem) => {
     setWherefrom(selectedItem.presentation.title);
     setFromEntityId(
@@ -131,7 +124,6 @@ export default function SearchFL() {
     setFromResults([]);
   };
 
-  // When a "where to" result is selected.
   const toHandleSelect = (selectedItem) => {
     setWhereTo(selectedItem.presentation.title);
     setToEntityId(selectedItem.navigation.relevantFlightParams.entityId || "");

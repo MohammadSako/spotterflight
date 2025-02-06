@@ -78,20 +78,16 @@ export function FlightList(data) {
             id="panel1-header"
           >
             <Typography component="span">
-              <Grid2
-                container
-                spacing={{ xs: 4, md: 4 }}
-                columns={{ xs: 8, sm: 8, md: 4 }}
-              >
-                {/* <div className="flex flex-row gap-20 "> */}
+              <div className="flex flex-row gap-20 ">
                 <Image
                   width={50}
                   height={50}
-                  alt={result.alternateId}
+                  alt={`${result.alternateId}${result.legs[0].carriers.marketing[0].logoUrl}`}
                   src={result.legs[0].carriers.marketing[0].logoUrl}
+                  className="h-10 w-10 object-cover object-center"
                 />
-                <div className="flex flex-col font-bold">
-                  <div className="flex flex-row gap-2 text-sm text-gray-600">
+                <div className="flex flex-col font-bold py-2">
+                  <div className="flex flex-row gap-2 text-sm text-blue-600">
                     <div className="">
                       {(() => {
                         const dateString = result.legs[0].arrival;
@@ -117,24 +113,34 @@ export function FlightList(data) {
                       })()}
                     </div>
                   </div>
-                  <div className="text-lg text-blue-600">
+                  <div className="text-sm text-gray-600">
                     {result.legs[0].carriers.marketing[0].name}
                   </div>
                 </div>
                 <div>
-                  <p className="text-lg text-blue-600">
+                  <p className="text-lg text-blue-600 font-bold">
                     {Math.floor(result.legs[0].durationInMinutes / 60) % 60}
                     min
                   </p>
-                  <p className="text-lg text-blue-600">
+                  <p className="text-sm text-gray-600">
                     {result.legs[0].origin.city} - {result.legs[1].origin.city}
                   </p>
                 </div>
-                <div>{result.legs[0].stopCount} Stops</div>
-                <div>KG</div>
-                <div>{result.price.formatted}</div>
-                {/* </div> */}
-              </Grid2>
+                <div>
+                  <p className="text-lg text-blue-600 font-bold">
+                    {result.legs[0].stopCount} Stops
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    {result.legs[0].origin.city} - {result.legs[1].origin.city}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-lg text-blue-600 font-bold">
+                    {result.price.formatted}
+                  </p>
+                  <p className="text-sm text-gray-600">Round trip</p>
+                </div>
+              </div>
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
