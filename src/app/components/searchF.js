@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -36,6 +36,7 @@ export default function SearchFL() {
   const [age, setAge] = useState("");
   const departureData = departure.format("YYYY-MM-DD");
   const returnData = returns.format("YYYY-MM-DD");
+  console.log(flightResults.data.itineraries.length === 0);
 
   function searchFlights() {
     const url = `https://sky-scrapper.p.rapidapi.com/api/v2/flights/searchFlights?originSkyId=${fromSkyId}&destinationSkyId=${toSkyId}&originEntityId=${fromEntityId}&destinationEntityId=${toEntityId}&date=${departureData}&returnDate=${returnData}&adults=${age}&sortBy=best&currency=USD&market=en-US&countryCode=US`;
@@ -146,7 +147,7 @@ export default function SearchFL() {
         <div className="flex justify-center bg-white rounded shadow-md p-4">
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div className="flex flex-row gap-8">
-              <div className="flex flex-col gap-2 mt-2">
+              <div className="flex flex-col gap-2 mt-2 relative">
                 <input
                   type="text"
                   value={wherefrom}
@@ -155,7 +156,7 @@ export default function SearchFL() {
                   placeholder="Where from?"
                 />
                 {wherefrom && fromResults.length > 0 && (
-                  <div className="border-2 border-gray-500 px-4 rounded-md shadow-lg">
+                  <div className="border-2 border-gray-500 px-4 rounded-md shadow-lg absolute z-50 bg-blue-100 mt-14">
                     <ul style={{ listStyle: "none", padding: 0 }}>
                       {fromResults.map((result, index) => (
                         <li
@@ -185,7 +186,7 @@ export default function SearchFL() {
                   placeholder="Where to?"
                 />
                 {whereTo && toResults.length > 0 && (
-                  <div className="border-2 border-gray-500 p-2 rounded-md shadow-lg absolute z-10 mt-16">
+                  <div className="border-2 border-gray-500 p-2 rounded-md shadow-lg absolute z-50 bg-blue-100 mt-14">
                     <ul style={{ listStyle: "none", padding: 0 }}>
                       {toResults.map((result, index) => (
                         <li
@@ -261,6 +262,11 @@ export default function SearchFL() {
           </div>
         )}
         {flightResults.status && <FlightList data={flightResults} />}
+        {flightResults.data.itineraries.length === 0 && (
+          <div className="flex justify-center text-2xl text-red-600 font-bold mt-10">
+            <p>Sorry, there is no flights in this date!</p>
+          </div>
+        )}
       </LocalizationProvider>
     </div>
   );
