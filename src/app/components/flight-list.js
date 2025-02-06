@@ -27,7 +27,7 @@ export function FlightList(data) {
                   className="h-10 w-10 object-cover object-center"
                 />
                 <div className="flex flex-col font-bold py-2">
-                  <div className="flex flex-row gap-2 text-sm text-blue-600">
+                  <div className="flex  md:flex-row flex-col md:gap-2 text-sm text-blue-600">
                     <div className="">
                       {(() => {
                         const dateString = result.legs[0].arrival;
@@ -39,10 +39,10 @@ export function FlightList(data) {
                           hour: "numeric",
                           minute: "numeric",
                         });
-                        return `${hours}`;
+                        return `${hours} -`;
                       })()}
                     </div>
-                    -
+
                     <div>
                       {(() => {
                         const dateString = result.legs[1].arrival;
@@ -101,7 +101,7 @@ export function FlightList(data) {
                     </span>
                   </div>
 
-                  <div className="flex flex-row gap-4">
+                  <div className="flex md:flex-row flex-col md:gap-4">
                     <div className="flex flex-col gap-1">
                       <div>
                         <span className="font-bold">Departure: </span>
