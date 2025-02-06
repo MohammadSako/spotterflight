@@ -5,8 +5,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "sky-scrapper.p.rapidapi.com",
-        pathname: "/api/v1/**",
+        hostname: "logos.skyscnr.com",
+        pathname: "**",
       },
     ],
   },
@@ -16,8 +16,8 @@ const nextConfig: NextConfig = {
         "localhost",
         "localhost:3000",
         "sky-scrapper.p.rapidapi.com",
-        "bionatural.vercel.com",
-        "38.242.195.164:3000",
+        "logos.skyscnr.com",
+        // "bionatural.vercel.com",
       ],
     },
   },

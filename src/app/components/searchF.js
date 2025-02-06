@@ -262,8 +262,9 @@ export default function SearchFL() {
           </form>
         </div>
         {loading && (
-          <div className="flex justify-center text-2xl text-blue-600 font-bold my-10">
+          <div className="flex flex-col justify-center text-2xl text-blue-600 font-bold mt-10">
             <Spinner />
+            <div className="flex justify-center ">Wait...</div>
           </div>
         )}
         {loadingFlight && (
