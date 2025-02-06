@@ -36,7 +36,6 @@ export default function SearchFL() {
   const [age, setAge] = useState("");
   const departureData = departure.format("YYYY-MM-DD");
   const returnData = returns.format("YYYY-MM-DD");
-  console.log(flightResults.data.itineraries.length === 0);
 
   function searchFlights() {
     const url = `https://sky-scrapper.p.rapidapi.com/api/v2/flights/searchFlights?originSkyId=${fromSkyId}&destinationSkyId=${toSkyId}&originEntityId=${fromEntityId}&destinationEntityId=${toEntityId}&date=${departureData}&returnDate=${returnData}&adults=${age}&sortBy=best&currency=USD&market=en-US&countryCode=US`;
@@ -144,9 +143,9 @@ export default function SearchFL() {
   return (
     <div>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <div className="flex justify-center bg-white rounded shadow-md p-4">
+        <div className="flex flex-col md:flex-row justify-center bg-white rounded xl:shadow-md p-4">
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <div className="flex flex-row gap-8">
+            <div className="flex md:flex-row flex-col lg:gap-8 md:gap-2">
               <div className="flex flex-col gap-2 mt-2 relative">
                 <input
                   type="text"
@@ -256,15 +255,18 @@ export default function SearchFL() {
           </form>
         </div>
         {loading && (
-          <div className="flex flex-col justify-center text-2xl text-blue-600 font-bold mt-10">
+          <div className="flex flex-col justify-center text-2xl text-gray-600 mt-10">
+            <div className="flex justify-center">
+              Wait for the airport data to load, as we don&apos;t have a real
+              database....
+            </div>
             <Spinner />
-            <div className="flex justify-center ">Wait...</div>
           </div>
         )}
         {flightResults.status && <FlightList data={flightResults} />}
-        {flightResults.data.itineraries.length === 0 && (
-          <div className="flex justify-center text-2xl text-red-600 font-bold mt-10">
-            <p>Sorry, there is no flights in this date!</p>
+        {!flightResults.status && (
+          <div className="flex justify-center text-3xl text-blue-600 mt-10">
+            <p>Search for a flight..</p>
           </div>
         )}
       </LocalizationProvider>

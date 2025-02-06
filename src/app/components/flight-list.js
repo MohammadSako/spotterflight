@@ -7,8 +7,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Image from "next/image";
 
 export function FlightList(data) {
-  console.log(data);
-
   return (
     <div className="mt-10 ">
       {data.data.data.itineraries.map((result, index) => (
@@ -17,10 +15,10 @@ export function FlightList(data) {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1-content"
             id="panel1-header"
-            className=" shadow-md"
+            className="shadow-md"
           >
             <Typography component="span">
-              <div className="flex flex-row gap-20">
+              <div className="flex md:flex-row flex-col md:gap-20">
                 <Image
                   width={50}
                   height={50}
@@ -38,10 +36,13 @@ export function FlightList(data) {
                           weekday: "short",
                           month: "short",
                           day: "numeric",
+                          hour: "numeric",
+                          minute: "numeric",
                         });
                         return `${hours}`;
                       })()}
                     </div>
+                    -
                     <div>
                       {(() => {
                         const dateString = result.legs[1].arrival;
@@ -50,6 +51,8 @@ export function FlightList(data) {
                           weekday: "short",
                           month: "short",
                           day: "numeric",
+                          hour: "numeric",
+                          minute: "numeric",
                         });
                         return `${hours}`;
                       })()}
@@ -61,8 +64,12 @@ export function FlightList(data) {
                 </div>
                 <div>
                   <p className="text-lg text-blue-600 font-bold">
-                    {Math.floor(result.legs[0].durationInMinutes / 60) % 60}
-                    min
+                    {(() => {
+                      const totalMinutes = result.legs[0].durationInMinutes;
+                      const hours = Math.floor(totalMinutes / 60);
+                      const minutes = totalMinutes % 60;
+                      return `${hours}h ${minutes}min`;
+                    })()}
                   </p>
                   <p className="text-sm text-gray-600">
                     {result.legs[0].origin.city} - {result.legs[1].origin.city}
@@ -71,9 +78,6 @@ export function FlightList(data) {
                 <div>
                   <p className="text-lg text-blue-600 font-bold">
                     {result.legs[0].stopCount} Stops
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    {result.legs[0].origin.city} - {result.legs[1].origin.city}
                   </p>
                 </div>
                 <div>
