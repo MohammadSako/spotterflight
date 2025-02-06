@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
         "localhost:3000",
         "sky-scrapper.p.rapidapi.com",
         "logos.skyscnr.com",
-        // "bionatural.vercel.com",
+        "spotterflight.vercel.app/",
       ],
     },
   },
