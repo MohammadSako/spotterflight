@@ -38,7 +38,8 @@ export default function SearchFL() {
   const returnData = returns.format("YYYY-MM-DD");
 
   function searchFlights() {
-    const url = `https://sky-scrapper.p.rapidapi.com/api/v2/flights/searchFlights?originSkyId=${fromSkyId}&destinationSkyId=${toSkyId}&originEntityId=${fromEntityId}&destinationEntityId=${toEntityId}&date=${departureData}&returnDate=${returnData}&adults=${age}&sortBy=best&currency=USD&market=en-US&countryCode=US`;
+    const url = `https://sky-scrapper.p.rapidapi.com/api/v2/flights/searchFlights?originSkyId=${fromSkyId}&destinationSkyId=${toSkyId}&originEntityId=${fromEntityId}&destinationEntityId=${toEntityId}&date=${departureData}&returnDate=${returnData}&cabinClass=economy&adults=${age}&sortBy=best&currency=USD&market=en-US&countryCode=US`;
+    // const url = `https://sky-scrapper.p.rapidapi.com/api/v2/flights/searchFlights?originSkyId=${fromSkyId}&destinationSkyId=${toSkyId}&originEntityId=${fromEntityId}&destinationEntityId=${toEntityId}&date=${departureData}&returnDate=${returnData}&cabinClass=economy&adults=${age}&sortBy=best&currency=USD&market=en-US&countryCode=US`;
     const options = {
       method: "GET",
       headers: {
@@ -51,6 +52,8 @@ export default function SearchFL() {
       setLoadingFlight(true);
       try {
         const response = await fetch(url, options);
+        console.log("response", response);
+
         const result = await response.json();
         setFlightResults(result || []);
       } catch (error) {
@@ -78,6 +81,8 @@ export default function SearchFL() {
         setLoading(true);
         const response = await fetch(url, options);
         const result = await response.json();
+        console.log("result", result);
+        
         setAirports(result.data || []);
         setFromResults([]);
         setToResults([]);
