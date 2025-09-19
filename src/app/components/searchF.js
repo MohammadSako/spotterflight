@@ -263,7 +263,7 @@ export default function SearchFL() {
           <div className="flex flex-col justify-center text-2xl text-gray-600 mt-10">
             <div className="flex justify-center">
               Wait for the airport data to load, as we don&apos;t have a real
-              database....
+              database..
             </div>
             <Spinner />
           </div>
@@ -271,7 +271,7 @@ export default function SearchFL() {
         {flightResults.status && <FlightList data={flightResults} />}
         {!flightResults.status && (
           <div className="flex justify-center text-3xl text-blue-600 mt-10">
-            <p>Search for a flight..</p>
+            <p>Search for a flight</p>
           </div>
         )}
       </LocalizationProvider>
