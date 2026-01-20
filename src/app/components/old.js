@@ -82,7 +82,7 @@ export default function SearchFL() {
         const response = await fetch(url, options);
         const result = await response.json();
         console.log("result", result);
-        
+
         setAirports(result.data || []);
         setFromResults([]);
         setToResults([]);
