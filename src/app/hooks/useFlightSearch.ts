@@ -44,56 +44,24 @@ type FlightResponse = {
   hasMore: boolean;
 };
 
-// export function useFlightSearch(params: SearchParams) {
-//   return useInfiniteQuery<FlightResponse>({
-//     queryKey: ["flights", params],
-//     queryFn: async ({ pageParam = 1 }) => {
-//       const res = await fetch(
-//         `/api/flights/search?origin=${params.origin}&destination=${params.destination}&date=${params.date}&page=${pageParam}&limit=10`
-//       );
-
-//       if (!res.ok) {
-//         throw new Error("Flight search failed");
-//       }
-
-//       return res.json();
-//     },
-//     getNextPageParam: (lastPage) => {
-//       return lastPage.hasMore ? lastPage.page + 1 : undefined;
-//     },
-//     initialPageParam: 1,
-//     enabled: Boolean(
-//       params.origin &&
-//       params.destination &&
-//       params.date
-//     ),
-//   });
-// }
-
 export function useFlightSearch(params: SearchParams) {
   return useInfiniteQuery<FlightResponse>({
     queryKey: ["flights", params],
     queryFn: async ({ pageParam = 1 }) => {
       const res = await fetch(
-        `/api/flights/search?origin=${params.origin}&destination=${params.destination}&date=${params.date}&page=${pageParam}&limit=10`
+        `/api/flights/search?origin=${params.origin}&destination=${params.destination}&date=${params.date}&page=${pageParam}&limit=10`,
       );
 
-      if (!res.ok) throw new Error("Flight search failed");
+      if (!res.ok) {
+        throw new Error("Flight search failed");
+      }
 
-      const data = await res.json();
-
-      // Compute hasMore if your API does not provide it
-      const hasMore = data.flights.length === 10; // if 10 results, there may be more
-
-      return {
-        ...data,
-        page: pageParam,
-        hasMore,
-      };
+      return res.json();
     },
-    getNextPageParam: (lastPage) => (lastPage.hasMore ? lastPage.page + 1 : undefined),
+    getNextPageParam: (lastPage) => {
+      return lastPage.hasMore ? lastPage.page + 1 : undefined;
+    },
     initialPageParam: 1,
     enabled: Boolean(params.origin && params.destination && params.date),
   });
 }
-
