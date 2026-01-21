@@ -1,7 +1,7 @@
 import * as React from "react";
-import SearchF from "./components/searchF";
 import Footer from "../components/ui/footer";
 import Link from "next/link";
+import SearchFL from "./components/searchF";
 
 export default function Home() {
   return (
@@ -28,7 +28,7 @@ export default function Home() {
         Then change the date, the click the search button.
       </p>
       <main className="mx-10 flex-grow">
-        <SearchF />
+        <SearchFL />
       </main>
       <footer className="py-4 mt-auto">
         <Footer />
