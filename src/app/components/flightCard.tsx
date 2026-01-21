@@ -9,14 +9,13 @@ export type Flight = {
   arrivalTime: string;
 };
 
-
 type Props = {
   flight: Flight;
 };
 
 export function FlightCard({ flight }: Props) {
   return (
-    <div className="rounded-xl border p-4 shadow-sm hover:shadow-md transition">
+    <div className="bg-card text-card-foreground border rounded-lg p-4 hover:shadow-md transition cursor-pointer">
       <div className="flex justify-between items-center">
         <div>
           <p className="font-semibold text-lg">{flight.airline}</p>

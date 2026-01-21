@@ -280,7 +280,7 @@ export default function SearchFL() {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <div className="flex flex-col md:flex-row justify-center bg-white p-4 gap-4">
+      <div className="flex flex-col md:flex-row justify-center bg-card text-card-foreground  p-4 gap-4">
         {/* Inputs */}
         <div className="flex flex-col gap-4 w-full md:w-auto">
           <div className="flex flex-col md:flex-row gap-4 items-center">
