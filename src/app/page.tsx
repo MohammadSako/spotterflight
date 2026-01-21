@@ -3,13 +3,13 @@
 import * as React from "react";
 import Footer from "../components/ui/footer";
 import SearchFL from "./components/searchF";
-import { ThemeToggle } from "./components/ThemeToggle";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 
 export default function Home() {
-  const { theme } = useTheme();
-  const logoSrc = theme === "dark" ? "/fl_d.svg" : "/fl.svg";
+  const { resolvedTheme } = useTheme();
+
+  const logoSrc = resolvedTheme === "dark" ? "/fl_d.svg" : "/fl.svg";
 
   return (
     <div className="flex flex-col min-h-screen ">

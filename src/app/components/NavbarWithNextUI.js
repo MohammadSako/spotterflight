@@ -20,8 +20,8 @@ export default function NavBarNextUI() {
   const path = usePathname();
 
   const navigation = [
-    { name: "Contact", href: "/contact", current: false },
     { name: "My CV", href: "/myCv", current: false },
+    { name: "Contact Us", href: "/contact", current: false },
   ];
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -30,7 +30,7 @@ export default function NavBarNextUI() {
     <Navbar
       onMenuOpenChange={setIsMenuOpen}
       className="
-    sticky top-0 z-50 my-4
+    sticky top-0 z-50
     bg-white/30 backdrop-blur-md
   "
     >
