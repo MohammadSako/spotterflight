@@ -35,7 +35,10 @@ function Footer() {
             </p>
           </div>
 
-          <Link href="/myCv" className="text-gray-500 hover:text-blue-600">
+          <Link
+            href="/myCv"
+            className="text-gray-500 hover:text-blue-500 dark:hover:text-white"
+          >
             My Curriculum Vitae
           </Link>
         </div>
@@ -54,7 +57,9 @@ export default Footer;
 const FooterLink = ({ icon, href }) => {
   return (
     <Link href={href ?? "/"} target="_blank" rel="noopener noreferrer">
-      <div className="text-gray-400 hover:text-blue-600">{icon}</div>
+      <div className="text-gray-400 hover:text-blue-500 dark:hover:text-white">
+        {icon}
+      </div>
     </Link>
   );
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import Footer from "../components/ui/footer";
+import Footer from "./components/footer";
 import SearchFL from "./components/searchF";
 import Image from "next/image";
 import { useTheme } from "next-themes";

@@ -15,15 +15,15 @@ export type Flight = {
   stops: number;
   departureTime: string;
   arrivalTime: string;
-  wherefromCode: string;
-  whereToCode: string;
 };
 
 type Props = {
   flight: Flight;
+  wherefromCode: string;
+  whereToCode: string;
 };
 
-export function FlightCard({ flight }: Props) {
+export function FlightCard({ flight, wherefromCode, whereToCode }: Props) {
   const airlineName = Airlines[flight.airline] ?? flight.airline;
 
   function formatDuration(duration: string): string {
@@ -36,7 +36,9 @@ export function FlightCard({ flight }: Props) {
     if (minutes) parts.push(`${minutes} min`);
     return parts.join(" ");
   }
-console.log("flight", flight);
+  console.log("flight", flight);
+  console.log("wherefromCode", wherefromCode);
+  console.log("whereToCode", whereToCode);
 
   return (
     <div className="text-card-foreground">

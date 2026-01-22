@@ -44,7 +44,7 @@ export default function NavBarNextUI() {
                   className={
                     path === item.href
                       ? "text-lg font-medium underline underline-offset-8 text-card-foreground decoration-2 decoration-blue-400"
-                      : "text-gray-400 hover:text-gray-700 text-lg font-medium hover:text-card-foreground"
+                      : "text-gray-400 hover:text-blue-500 dark:hover:text-white text-lg font-medium hover:text-card-foreground"
                   }
                 >
                   {item.name}
