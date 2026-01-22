@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { CardSkeleton } from "../../components/ui/cardSkeleton";
 import { useDebounce } from "../hooks/useDebounce";
 import { toast } from "sonner";
+import { GoGraph } from "react-icons/go";
 
 export default function SearchFL() {
   const [wherefrom, setWherefrom] = useState<{ city: string; code: string }>({
@@ -45,7 +46,7 @@ export default function SearchFL() {
   const { data, isLoading, error } = useFlightSearch(
     debouncedSearchParams || { origin: "", destination: "", date: "" },
   );
-console.log("data", data);
+  console.log("data", data);
 
   const datas = [
     {
@@ -199,6 +200,15 @@ console.log("data", data);
               </>
             )}
           </Button>
+
+          {/*    Price        Graph */}
+          {datas && datas.length > 0 && (
+            <div className="flex items-center justify-end gap-2 ">
+              <GoGraph color="blue" size={20} />
+              <p>Price graph</p>
+            </div>
+          )}
+
           {/* Results */}
           <div className="flex-1 mt-4 md:mt-0">
             {isLoading && (
