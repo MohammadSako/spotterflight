@@ -1,205 +1,19 @@
-// "use client";
-
-// import * as React from "react";
-// import { useEffect, useState } from "react";
-// import dayjs from "dayjs";
-// import BtnSpinner from "../../components/ui/button-spinner";
-// import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-// import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-// import { useFlightSearch } from "../hooks/useFlightSearch";
-// import { FlightCard } from "./flightCard";
-// import { AIRPORTS } from "./airportsList";
-
-// export default function SearchFL() {
-//   const [wherefrom, setWherefrom] = useState("");
-//   const [whereTo, setWhereTo] = useState("");
-//   const [airports, setAirports] = useState([]);
-//   const [fromResults, setFromResults] = useState([]);
-//   const [toResults, setToResults] = useState([]);
-//   const [departure, setDeparture] = useState(dayjs());
-
-//   const departureData = departure.format("YYYY-MM-DD");
-
-//   const { data, isLoading, error } = useFlightSearch({
-//     origin: wherefrom.code,
-//     destination: whereTo.code,
-//     date: departureData,
-//   });
-// console.log("wherefrom", wherefrom.code);
-// console.log("whereTo", whereTo.code);
-// console.log("departureData:", departureData);
-//   function searchFlights() {
-
-//   }
-
-//   useEffect(() => {
-//     setAirports(AIRPORTS || []);
-//     setFromResults([]);
-//     setToResults([]);
-//   }, []);
-
-//   const flights = data ?? [];
-
-//   console.log("datadata", data);
-
-//   const WherefromHandle = (e) => {
-//     const searchTerm = e.target.value;
-//     setWherefrom(searchTerm);
-//     if (searchTerm.trim() === "") {
-//       setFromResults([]);
-//     } else {
-//       const filtered = airports.filter((item) =>
-//         item.city.toLowerCase().includes(searchTerm.toLowerCase()),
-//       );
-//       setFromResults(filtered);
-//     }
-//   };
-
-//   const WheretoHandle = (e) => {
-//     const searchTerm = e.target.value;
-//     setWhereTo(searchTerm);
-//     if (searchTerm.trim() === "") {
-//       setToResults([]);
-//     } else {
-//       const filtered = airports.filter((item) =>
-//         item.city.toLowerCase().includes(searchTerm.toLowerCase()),
-//       );
-//       setToResults(filtered);
-//     }
-//   };
-
-//   const fromHandleSelect = (selectedItem) => {
-//     setWherefrom(selectedItem);
-//     setFromResults([]);
-//   };
-
-//   const toHandleSelect = (selectedItem) => {
-//     setWhereTo(selectedItem);
-//     setToResults([]);
-//   };
-
-//   return (
-//     <>
-//       <LocalizationProvider dateAdapter={AdapterDayjs}>
-//         <div className="flex flex-col md:flex-row justify-center bg-white rounded xl:shadow-md p-4">
-//           <div className="flex flex-col gap-4">
-//             <div className="flex md:flex-row flex-col lg:gap-8 md:gap-2">
-//               <div className="flex flex-col gap-2 mt-2 relative">
-//                 <input
-//                   type="text"
-//                   value={wherefrom.city}
-//                   className="border border-slate-400 px-4 rounded h-14"
-//                   onChange={WherefromHandle}
-//                   placeholder="Where from?"
-//                 />
-//                 {wherefrom && fromResults.length > 0 && (
-//                   <div className="border-2 border-gray-500 px-4 rounded-md shadow-lg absolute z-50 bg-blue-100 mt-14">
-//                     <ul style={{ listStyle: "none", padding: 0 }}>
-//                       {fromResults.map((result, index) => (
-//                         <li
-//                           key={index}
-//                           onClick={() => fromHandleSelect(result)}
-//                           style={{
-//                             cursor: "pointer",
-//                             padding: "0.5rem",
-//                             borderBottom: "1px solid #ccc",
-//                           }}
-//                         >
-//                           <strong>{result.city}</strong>
-//                           <br />
-//                           <em>{result.code}</em>
-//                         </li>
-//                       ))}
-//                     </ul>
-//                   </div>
-//                 )}
-//               </div>
-
-//               <div className="flex flex-col gap-2 mt-2 relative">
-//                 <input
-//                   type="text"
-//                   value={whereTo.city}
-//                   className="border border-slate-400 px-4 rounded h-14"
-//                   onChange={WheretoHandle}
-//                   placeholder="Where to?"
-//                 />
-//                 {whereTo && toResults.length > 0 && (
-//                   <div className="border-2 border-gray-500 p-2 rounded-md shadow-lg absolute z-50 bg-blue-100 mt-14">
-//                     <ul style={{ listStyle: "none", padding: 0 }}>
-//                       {toResults.map((result, index) => (
-//                         <li
-//                           key={index}
-//                           onClick={() => toHandleSelect(result)}
-//                           style={{
-//                             cursor: "pointer",
-//                             padding: "0.5rem",
-//                             borderBottom: "1px solid #ccc",
-//                           }}
-//                         >
-//                           <strong>{result.city}</strong>
-//                           <br />
-//                           <em>{result.code}</em>
-//                         </li>
-//                       ))}
-//                     </ul>
-//                   </div>
-//                 )}
-//               </div>
-//               <DemoContainer components={["DatePickers"]}>
-//                 <DatePicker
-//                   label="Departure"
-//                   value={departure}
-//                   onChange={setDeparture}
-//                 />
-//               </DemoContainer>
-//             </div>
-//             <button
-//               onClick={searchFlights}
-//               className="bg-blue-500 text-white py-2 px-4 rounded text-lg z-10 shadow-lg hover:shadow-inner"
-//             >
-//               {isLoading ? <BtnSpinner /> : "Search Flights"}
-//             </button>
-//           </div>
-//         </div>
-
-//         {data && (
-//           <div>
-//             {flights.map((flight) => (
-//               <FlightCard key={flight.id} flight={flight} />
-//             ))}
-//           </div>
-//         )}
-//         {!data && isLoading && (
-//           <div className="flex justify-center text-3xl text-blue-600 mt-10">
-//             <p>Search for a flight</p>
-//           </div>
-//         )}
-//         {error && (
-//           <div className="flex justify-center text-3xl text-blue-600 mt-10">
-//             <p>Unexpected error</p>
-//           </div>
-//         )}
-//       </LocalizationProvider>
-//     </>
-//   );
-// }
-
 "use client";
 
-import * as React from "react";
 import { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
-import BtnSpinner from "../../components/ui/button-spinner";
+import { IoSearchOutline } from "react-icons/io5";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { useFlightSearch } from "../hooks/useFlightSearch";
-import { FlightCard } from "./flightCard";
-import { AIRPORTS } from "./airportsList";
-import { CardSkeleton } from "./cardSkeleton";
+import BtnSpinner from "../../components/ui/button-spinner";
+import { FlightCard } from "../../components/ui/flightCard";
+import { AIRPORTS } from "../../components/ui/airportsList";
+import FlightInput from "../../components/ui/flightInput";
+import { Button } from "@/components/ui/button";
+import { CardSkeleton } from "../../components/ui/cardSkeleton";
 import { useDebounce } from "../hooks/useDebounce";
 
 export default function SearchFL() {
@@ -230,9 +44,6 @@ export default function SearchFL() {
   const { data, isLoading, error } = useFlightSearch(
     debouncedSearchParams || { origin: "", destination: "", date: "" },
   );
-  console.log("data", data);
-
-  // const flights = data?.pages?.flatMap((page) => page.flights) ?? [];
 
   // Handlers for filtering airport list
   const handleFromChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -280,57 +91,31 @@ export default function SearchFL() {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <div className="flex flex-col md:flex-row justify-center bg-card text-card-foreground  p-4 gap-4">
+      <div className="flex flex-col md:flex-row justify-center bg-card text-card-foreground gap-4">
         {/* Inputs */}
         <div className="flex flex-col gap-4 w-full md:w-auto">
-          <div className="flex flex-col md:flex-row gap-4 items-center">
+          <div className="flex flex-col sm:flex-row gap-4 items-center">
             {/* From */}
-            <div className="relative flex-1 mt-2">
-              <input
-                type="text"
-                value={wherefrom.city}
-                onChange={handleFromChange}
-                placeholder="Where from?"
-                className="border border-slate-400 px-4 rounded h-14 w-full"
-              />
-              {fromResults.length > 0 && (
-                <ul className="absolute z-50 bg-white border shadow-lg w-full mt-1 max-h-60 overflow-auto rounded">
-                  {fromResults.map((item, idx) => (
-                    <li
-                      key={idx}
-                      className="cursor-pointer px-4 py-2 hover:bg-blue-100"
-                      onClick={() => selectFrom(item)}
-                    >
-                      <strong>{item.city}</strong> <em>({item.code})</em>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-
+            <FlightInput
+              value={wherefrom.city}
+              handle={handleFromChange}
+              data={fromResults}
+              onSelect={selectFrom}
+              placeholder="Where from?"
+              variant="from"
+              wherefromCode={wherefrom.code}
+            />
             {/* To */}
-            <div className="relative flex-1 mt-2">
-              <input
-                type="text"
-                value={whereTo.city}
-                onChange={handleToChange}
-                placeholder="Where to?"
-                className="border border-slate-400 px-4 rounded h-14 w-full"
-              />
-              {toResults.length > 0 && (
-                <ul className="absolute z-50 bg-white border shadow-lg w-full mt-1 max-h-60 overflow-auto rounded">
-                  {toResults.map((item, idx) => (
-                    <li
-                      key={idx}
-                      className="cursor-pointer px-4 py-2 hover:bg-blue-100"
-                      onClick={() => selectTo(item)}
-                    >
-                      <strong>{item.city}</strong> <em>({item.code})</em>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
+            <FlightInput
+              value={whereTo.city}
+              handle={handleToChange}
+              data={toResults}
+              onSelect={selectTo}
+              placeholder="Where to?"
+              variant="to"
+              whereToCode={whereTo.code}
+            />
+
             {/* Date */}
             <div className="relative flex-1">
               <DemoContainer components={["DatePickers"]}>
@@ -338,18 +123,24 @@ export default function SearchFL() {
                   label="Departure"
                   value={departure}
                   onChange={setDeparture}
+                  className="border border-slate-400 px-4 text-blue-700 font-bold rounded h-14 sm:w-full w-[248px]"
                 />
               </DemoContainer>
             </div>
           </div>
-
-          <button
+          <Button
             onClick={searchFlights}
-            className="bg-blue-500 text-white py-3 px-6 rounded text-lg shadow hover:shadow-inner"
+            className="bg-blue-600 text-white py-1 px-6 rounded text-lg shadow hover:bg-blue-800 hover:shadow-inner"
           >
-            {isLoading ? <BtnSpinner /> : "Search Flights"}
-          </button>
-
+            {isLoading ? (
+              <BtnSpinner />
+            ) : (
+              <>
+                <IoSearchOutline size={22} />
+                <p className="font-google">Search Flights</p>
+              </>
+            )}
+          </Button>
           {/* Results */}
           <div className="flex-1 mt-4 md:mt-0">
             {isLoading && (
@@ -361,7 +152,7 @@ export default function SearchFL() {
             )}
             {error && (
               <div className="text-center text-xl">
-                <p className="text-white text-md p-1 bg-red-400 rounded mt-1">
+                <p className="text-white text-md p-1 font-google bg-red-400 rounded mt-1">
                   {error.message}
                 </p>
               </div>

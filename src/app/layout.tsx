@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Roboto } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Providers from "./providers";
 
@@ -11,6 +12,30 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const roboto = Roboto({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-roboto",
+});
+
+const googleSans = localFont({
+  src: [
+    {
+      path: "../../public/fonts/GoogleSans-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/GoogleSans-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-google-sans",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -26,7 +51,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} ${googleSans.variable} antialiased`}
       >
         <Providers>{children}</Providers>
       </body>

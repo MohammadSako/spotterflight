@@ -28,7 +28,7 @@ export function ThemeToggle() {
             transition-all duration-300
             ${
               theme === btn.id
-                ? "bg-primary text-primary-foreground shadow"
+                ? "bg-blue-500 text-primary-foreground shadow"
                 : "hover:bg-muted"
             }
           `}

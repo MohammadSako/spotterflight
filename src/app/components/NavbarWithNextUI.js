@@ -12,7 +12,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { ThemeToggle } from "./ThemeToggle";
+import { ThemeToggle } from "../../components/ui/ThemeToggle";
 
 export default function NavBarNextUI() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,12 +20,9 @@ export default function NavBarNextUI() {
   const path = usePathname();
 
   const navigation = [
-    { name: "My CV", href: "/myCv", current: false },
-    { name: "Contact Us", href: "/contact", current: false },
+    { name: "My Curriculum Vitae", href: "/myCv", current: false },
   ];
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
+
   return (
     <Navbar
       onMenuOpenChange={setIsMenuOpen}
@@ -46,8 +43,8 @@ export default function NavBarNextUI() {
                 <div
                   className={
                     path === item.href
-                      ? "text-gray-900  text-lg font-medium"
-                      : "text-gray-400 hover:text-gray-900 text-lg font-medium"
+                      ? "text-lg font-medium underline underline-offset-8 text-card-foreground decoration-2 decoration-blue-400"
+                      : "text-gray-400 hover:text-gray-700 text-lg font-medium hover:text-card-foreground"
                   }
                 >
                   {item.name}
@@ -61,7 +58,7 @@ export default function NavBarNextUI() {
         <Link href="/">
           <h1 className="text-4xl font-sans text-inherit tracking-tight">
             Flights{" "}
-            <span className="text-gradient bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-400 text-transparent bg-clip-text">
+            <span className="font-bold text-gradient bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-400 text-transparent bg-clip-text">
               Fetch
             </span>
           </h1>

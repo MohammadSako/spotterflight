@@ -14,9 +14,6 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen ">
       <div className="relative">
-        {/* <div className="absolute flex justify-end p-4">
-          <ThemeToggle />
-        </div> */}
         <Image
           src={logoSrc}
           alt="Logo"
