@@ -8,3 +8,4 @@ export type Flight = {
   departureTime: string;
   arrivalTime: string;
 };
+

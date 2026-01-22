@@ -14,7 +14,6 @@ import { AIRPORTS } from "../../components/ui/airportsList";
 import FlightInput from "../../components/ui/flightInput";
 import { Button } from "@/components/ui/button";
 import { CardSkeleton } from "../../components/ui/cardSkeleton";
-import { SonnerAlert } from "../../components/ui/sonnerAlert";
 import { useDebounce } from "../hooks/useDebounce";
 import { toast } from "sonner";
 
@@ -46,6 +45,40 @@ export default function SearchFL() {
   const { data, isLoading, error } = useFlightSearch(
     debouncedSearchParams || { origin: "", destination: "", date: "" },
   );
+console.log("data", data);
+
+  const datas = [
+    {
+      id: "1",
+      price: 100,
+      currency: "USD",
+      airline: "KU",
+      duration: "PT2H45M",
+      stops: 0,
+      departureTime: "2026-01-22T02:15:00",
+      arrivalTime: "2026-02-22T04:15:00",
+    },
+    {
+      id: "2",
+      price: 200,
+      currency: "USD",
+      airline: "TK",
+      duration: "PT8H45M",
+      stops: 1,
+      departureTime: "2026-01-22T13:15:00",
+      arrivalTime: "2026-02-22T15:15:00",
+    },
+    {
+      id: "3",
+      price: 400,
+      currency: "USD",
+      airline: "RJ",
+      duration: "PT1H30M",
+      stops: 2,
+      departureTime: "2026-01-22T13:15:00",
+      arrivalTime: "2026-02-22T15:15:00",
+    },
+  ];
 
   // Handlers for filtering airport list
   const handleFromChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,6 +123,9 @@ export default function SearchFL() {
       date: departureData,
     });
   };
+  // console.log("wherefrom.code", wherefrom.code);
+  // console.log("whereTo.code", whereTo.code);
+  // console.log("departureData", departureData);
 
   useEffect(() => {
     if (error) {
@@ -177,9 +213,9 @@ export default function SearchFL() {
                 No flights available for this route.
               </p>
             )}
-            {data && data.length > 0 && (
+            {datas && datas.length > 0 && (
               <div className="flex flex-col gap-4">
-                {data.map((flight) => (
+                {datas.map((flight) => (
                   <FlightCard
                     key={flight.id}
                     flight={flight}
