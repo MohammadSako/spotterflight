@@ -1,6 +1,5 @@
 "use client";
 
-import { Checkbox } from "@/components/ui/checkbox";
 import Slider from "@mui/material/Slider";
 import { Airlines } from "./airLines";
 import { useEffect, useRef, useState } from "react";
@@ -80,13 +79,13 @@ export function FlightFilterBar({ filters, setFilters }: Props) {
       <div>
         <p className="font-semibold mb-2">Stops</p>
         <div className="flex gap-3 text-sm">
-          {["all", 0, 1, 2].map((s) => (
+          {(["all", 0, 1, 2] as const).map((s) => (
             <button
               key={s}
               onClick={() =>
                 setFilters((prev) => ({
                   ...prev,
-                  stops: s as any,
+                  stops: s,
                 }))
               }
               className={`px-3 py-1 rounded-full border ${

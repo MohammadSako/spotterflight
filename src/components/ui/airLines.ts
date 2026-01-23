@@ -29,6 +29,9 @@ export const Airlines: Record<string, string> = {
   FR: "Ryanair",
   U2: "easyJet",
   W6: "Wizz Air",
+  F3: "Vueling Airlines",
+  VY: "Vueling",
+  
 
   TK: "Turkish Airlines",
   SQ: "Singapore Airlines",

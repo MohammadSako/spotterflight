@@ -1,4 +1,20 @@
-export function mapAmadeusOffers(offers: any[]) {
+interface AmadeusOffer {
+  id: string;
+  itineraries: Array<{
+    duration: string;
+    segments: Array<{
+      carrierCode: string;
+      departure: { at: string };
+      arrival: { at: string };
+    }>;
+  }>;
+  price: {
+    total: string;
+    currency: string;
+  };
+}
+
+export function mapAmadeusOffers(offers: AmadeusOffer[]) {
   return offers.map((offer) => {
     const itinerary = offer.itineraries[0];
     const segments = itinerary.segments;
