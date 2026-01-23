@@ -56,40 +56,6 @@ export default function SearchFL() {
   const { data, isLoading, error } = useFlightSearch(
     debouncedSearchParams || { origin: "", destination: "", date: "" },
   );
-  console.log("data", data);
-
-  // const datas = [
-  //   {
-  //     id: "1",
-  //     price: 100,
-  //     currency: "USD",
-  //     airline: "KU",
-  //     duration: "PT2H45M",
-  //     stops: 0,
-  //     departureTime: "2026-01-22T02:15:00",
-  //     arrivalTime: "2026-02-22T04:15:00",
-  //   },
-  //   {
-  //     id: "2",
-  //     price: 200,
-  //     currency: "USD",
-  //     airline: "TK",
-  //     duration: "PT8H45M",
-  //     stops: 1,
-  //     departureTime: "2026-01-22T13:15:00",
-  //     arrivalTime: "2026-02-22T15:15:00",
-  //   },
-  //   {
-  //     id: "3",
-  //     price: 400,
-  //     currency: "USD",
-  //     airline: "RJ",
-  //     duration: "PT1H30M",
-  //     stops: 2,
-  //     departureTime: "2026-01-22T13:15:00",
-  //     arrivalTime: "2026-02-22T15:15:00",
-  //   },
-  // ];
 
   // Handlers for filtering airport list
   const handleFromChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -174,7 +140,7 @@ export default function SearchFL() {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="flex flex-col md:flex-row justify-center gap-4 mt-4">
         {/* Inputs */}
-        <div className="flex flex-col gap-4 w-full md:w-auto">
+        <div className="flex flex-col w-full md:w-auto">
           <div className="flex flex-col sm:flex-row gap-4 items-center">
             {/* From */}
             <FlightInput
@@ -210,7 +176,7 @@ export default function SearchFL() {
           <Button
             onClick={searchFlights}
             size="lg"
-            className="bg-blue-500 text-white rounded-full text-lg shadow-md hover:bg-blue-600 hover:shadow-inner"
+            className="bg-blue-500 mt-4 text-white rounded-full text-lg shadow-md hover:bg-blue-600 hover:shadow-inner"
           >
             {isLoading ? (
               <BtnSpinner />
@@ -221,13 +187,13 @@ export default function SearchFL() {
               </>
             )}
           </Button>
-
           {filteredFlights && filteredFlights.length > 0 && (
-            <>
+            <div className="flex justify-end">
+
               {/* Trigger */}
               <button
                 onClick={() => setOpenGraph(true)}
-                className="flex items-center gap-2 mt-4 text-blue-600 hover:text-blue-700"
+                className="inline-flex items-center w-fit gap-2 mt-4 text-blue-500 hover:text-blue-700 font-google hover:bg-blue-100 dark:hover:bg-slate-800 rounded-full px-3 py-1"
               >
                 <GoGraph size={20} />
                 <span className="font-semibold">Price graph</span>
@@ -260,7 +226,7 @@ export default function SearchFL() {
                   </div>
                 </div>
               )}
-            </>
+            </div>
           )}
 
           {/* Results */}

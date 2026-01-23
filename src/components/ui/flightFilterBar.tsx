@@ -57,7 +57,7 @@ export function FlightFilterBar({ filters, setFilters }: Props) {
   }, [airlinesOpen]);
 
   return (
-    <div className="border rounded-lg p-4 bg-white dark:bg-gray-900 shadow-sm space-y-4">
+    <div className="border rounded-lg p-4 bg-white dark:bg-gray-900 shadow-md space-y-4">
       {/* Price */}
       <div>
         <p className="font-semibold mb-2">Max price: ${filters.maxPrice}</p>

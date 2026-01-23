@@ -14,7 +14,6 @@ export async function GET(req: Request) {
   }
 
   const token = await getAmadeusAccessToken();
-console.log("token", token);
 
   const res = await fetch(
     `${process.env.AMADEUS_BASE_URL}/v2/shopping/flight-offers?originLocationCode=${origin}&destinationLocationCode=${destination}&departureDate=${date}&adults=1`,
@@ -22,7 +21,7 @@ console.log("token", token);
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }
+    },
   );
 
   const data = await res.json();
