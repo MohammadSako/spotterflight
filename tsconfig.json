@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/components/search-flight.js", "src/app/components/flightCard.js", "src/app/components/searchF.tsx", "src/components/ui/flightInput.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/components/search-flight.js", "src/app/components/flightCard.js", "src/app/components/searchF.tsx", "src/components/ui/flightInput.tsx"],
   "exclude": ["node_modules"]
 }

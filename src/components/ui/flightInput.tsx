@@ -1,23 +1,27 @@
 import { MdFlightTakeoff, MdFlightLand } from "react-icons/md";
 import { memo, useRef, useEffect, useState } from "react";
+import { FlightInputProps } from "@/app/types/FlightInput";
 
-const FlightInput = memo(function FlightInput({
+const FlightInput = ({
   value,
   handle,
-  data = [],
+  data,
   onSelect,
   placeholder,
   variant,
-}) {
+}: FlightInputProps) => {
   const [open, setOpen] = useState(false); // dropdown state
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const Icon = variant === "to" ? MdFlightLand : MdFlightTakeoff;
 
   // Close dropdown on outside click
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (containerRef.current && !containerRef.current.contains(event.target)) {
-        setOpen(false);
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+      containerRef.current &&
+      !containerRef.current.contains(event.target as Node)
+      ) {
+      setOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -27,7 +31,7 @@ const FlightInput = memo(function FlightInput({
   }, []);
 
   // Open dropdown when typing
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handle(e);
     setOpen(true);
   };
@@ -77,6 +81,5 @@ const FlightInput = memo(function FlightInput({
       )}
     </div>
   );
-});
-
-export default FlightInput;
+};
+export default memo(FlightInput);
