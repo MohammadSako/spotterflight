@@ -17,8 +17,18 @@ import { CardSkeleton } from "../../components/ui/cardSkeleton";
 import { useDebounce } from "../hooks/useDebounce";
 import { toast } from "sonner";
 import { GoGraph } from "react-icons/go";
+import { FlightFilterBar } from "@/components/ui/flightFilterBar";
+import PriceGraph from "@/components/ui/PriceGraph";
 
 export default function SearchFL() {
+  const [openGraph, setOpenGraph] = useState(false);
+
+  const [filters, setFilters] = useState({
+    maxPrice: 1000,
+    stops: "all" as "all" | 0 | 1 | 2,
+    airlines: [] as string[],
+  });
+
   const [wherefrom, setWherefrom] = useState<{ city: string; code: string }>({
     city: "",
     code: "",
@@ -48,38 +58,38 @@ export default function SearchFL() {
   );
   console.log("data", data);
 
-  const datas = [
-    {
-      id: "1",
-      price: 100,
-      currency: "USD",
-      airline: "KU",
-      duration: "PT2H45M",
-      stops: 0,
-      departureTime: "2026-01-22T02:15:00",
-      arrivalTime: "2026-02-22T04:15:00",
-    },
-    {
-      id: "2",
-      price: 200,
-      currency: "USD",
-      airline: "TK",
-      duration: "PT8H45M",
-      stops: 1,
-      departureTime: "2026-01-22T13:15:00",
-      arrivalTime: "2026-02-22T15:15:00",
-    },
-    {
-      id: "3",
-      price: 400,
-      currency: "USD",
-      airline: "RJ",
-      duration: "PT1H30M",
-      stops: 2,
-      departureTime: "2026-01-22T13:15:00",
-      arrivalTime: "2026-02-22T15:15:00",
-    },
-  ];
+  // const datas = [
+  //   {
+  //     id: "1",
+  //     price: 100,
+  //     currency: "USD",
+  //     airline: "KU",
+  //     duration: "PT2H45M",
+  //     stops: 0,
+  //     departureTime: "2026-01-22T02:15:00",
+  //     arrivalTime: "2026-02-22T04:15:00",
+  //   },
+  //   {
+  //     id: "2",
+  //     price: 200,
+  //     currency: "USD",
+  //     airline: "TK",
+  //     duration: "PT8H45M",
+  //     stops: 1,
+  //     departureTime: "2026-01-22T13:15:00",
+  //     arrivalTime: "2026-02-22T15:15:00",
+  //   },
+  //   {
+  //     id: "3",
+  //     price: 400,
+  //     currency: "USD",
+  //     airline: "RJ",
+  //     duration: "PT1H30M",
+  //     stops: 2,
+  //     departureTime: "2026-01-22T13:15:00",
+  //     arrivalTime: "2026-02-22T15:15:00",
+  //   },
+  // ];
 
   // Handlers for filtering airport list
   const handleFromChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -124,9 +134,6 @@ export default function SearchFL() {
       date: departureData,
     });
   };
-  // console.log("wherefrom.code", wherefrom.code);
-  // console.log("whereTo.code", whereTo.code);
-  // console.log("departureData", departureData);
 
   useEffect(() => {
     if (error) {
@@ -148,6 +155,20 @@ export default function SearchFL() {
       );
     }
   }, [data, isLoading]);
+
+  const filteredFlights = data?.filter((flight) => {
+    if (flight.price > filters.maxPrice) return false;
+
+    if (filters.stops !== "all" && flight.stops !== filters.stops) return false;
+
+    if (
+      filters.airlines.length > 0 &&
+      !filters.airlines.includes(flight.airline)
+    )
+      return false;
+
+    return true;
+  });
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -201,12 +222,45 @@ export default function SearchFL() {
             )}
           </Button>
 
-          {/*    Price        Graph */}
-          {datas && datas.length > 0 && (
-            <div className="flex items-center justify-end gap-2 ">
-              <GoGraph color="blue" size={20} />
-              <p>Price graph</p>
-            </div>
+          {filteredFlights && filteredFlights.length > 0 && (
+            <>
+              {/* Trigger */}
+              <button
+                onClick={() => setOpenGraph(true)}
+                className="flex items-center gap-2 mt-4 text-blue-600 hover:text-blue-700"
+              >
+                <GoGraph size={20} />
+                <span className="font-semibold">Price graph</span>
+              </button>
+
+              {/* Modal */}
+              {openGraph && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center">
+                  {/* Backdrop */}
+                  <div
+                    className="absolute inset-0 bg-black/50"
+                    onClick={() => setOpenGraph(false)}
+                  />
+
+                  {/* Modal content */}
+                  <div className="relative bg-white dark:bg-slate-900 rounded-xl shadow-lg w-full max-w-3xl mx-4 p-6 animate-in fade-in zoom-in">
+                    {/* Header */}
+                    <div className="flex items-center justify-between mb-4">
+                      <h2 className="text-lg font-semibold">Price graph</h2>
+                      <button
+                        onClick={() => setOpenGraph(false)}
+                        className="text-gray-500 hover:text-gray-700 text-xl"
+                      >
+                        ✕
+                      </button>
+                    </div>
+
+                    {/* Graph */}
+                    <PriceGraph flights={filteredFlights} />
+                  </div>
+                </div>
+              )}
+            </>
           )}
 
           {/* Results */}
@@ -223,9 +277,15 @@ export default function SearchFL() {
                 No flights available for this route.
               </p>
             )}
-            {datas && datas.length > 0 && (
+
+            {data && data.length > 0 && (
+              <div className="mb-4">
+                <FlightFilterBar filters={filters} setFilters={setFilters} />
+              </div>
+            )}
+            {data && data.length > 0 && (
               <div className="flex flex-col gap-4">
-                {datas.map((flight) => (
+                {filteredFlights?.map((flight) => (
                   <FlightCard
                     key={flight.id}
                     flight={flight}
