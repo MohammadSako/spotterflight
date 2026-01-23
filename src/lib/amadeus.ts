@@ -2,7 +2,6 @@ let accessToken: string | null = null;
 let expiresAt = 0;
 
 export async function getAmadeusAccessToken() {
-  // إعادة استخدام التوكن إذا لم تنتهِ صلاحيته
   if (accessToken && Date.now() < expiresAt) {
     return accessToken;
   }

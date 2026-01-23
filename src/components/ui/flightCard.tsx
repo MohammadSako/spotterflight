@@ -11,6 +11,7 @@ import {
   MdOutlineOndemandVideo,
 } from "react-icons/md";
 import { FiAlertTriangle, FiWifi } from "react-icons/fi";
+import { useState } from "react";
 
 export type Flight = {
   id: string;
@@ -30,6 +31,8 @@ type Props = {
 };
 
 export function FlightCard({ flight, wherefromCode, whereToCode }: Props) {
+  const [expanded, setExpanded] = useState(false);
+
   const airlineName = Airlines[flight.airline] ?? flight.airline;
   const toAirport = AIRPORTS.find((a) => a.code === whereToCode);
   const fromAirport = AIRPORTS.find((a) => a.code === wherefromCode);
@@ -58,6 +61,14 @@ export function FlightCard({ flight, wherefromCode, whereToCode }: Props) {
     return `${hours} hr`;
   }
 
+  const departureTimeDay = new Date(flight.departureTime).toLocaleDateString(
+    [],
+    {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+    },
+  );
   const departureTime = new Date(flight.departureTime).toLocaleTimeString([], {
     hour: "numeric",
     minute: "2-digit",
@@ -73,7 +84,10 @@ export function FlightCard({ flight, wherefromCode, whereToCode }: Props) {
 
   return (
     <div className="text-card-foreground">
-      <Accordion>
+      <Accordion
+        expanded={expanded}
+        onChange={(_, isExpanded) => setExpanded(isExpanded)}
+      >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
@@ -85,12 +99,19 @@ export function FlightCard({ flight, wherefromCode, whereToCode }: Props) {
             </div>
 
             <div className="sm:flex flex-col hidden">
-              <div className="text-gray-900 dark:text-gray-100 text-md flex flex-row gap-2">
-                <p>{departureTime}</p>-<p>{arrivalTime}</p>
-              </div>
-              {wherefromCode && (
+              {!expanded && (
+                <div className="text-gray-900 dark:text-gray-100 text-md flex flex-row gap-2">
+                  <p>{departureTime}</p>-<p>{arrivalTime}</p>
+                </div>
+              )}
+              {expanded && (
+                <div className="text-gray-900 dark:text-gray-100 text-md flex flex-row gap-2">
+                  <p>Departure - {departureTimeDay}</p>
+                </div>
+              )}
+              {!expanded && (
                 <p className="text-gray-400 dark:text-gray-500 text-xs">
-                  {wherefromCode} - {whereToCode}
+                  {airlineName}
                 </p>
               )}
             </div>
@@ -178,7 +199,7 @@ export function FlightCard({ flight, wherefromCode, whereToCode }: Props) {
               </div>
             </div>
             <div className="border-t border-gray-200 sm:hidden" />
-            <div className="flex flex-col gap-2 text-sm text-gray-900">
+            <div className="flex flex-col gap-2 text-sm text-gray-500 dark:text-gray-400">
               <div className="flex flex-row gap-2 items-center">
                 <MdAirlineSeatLegroomNormal />
                 <p>Average legroom (30 in)</p>
