@@ -19,6 +19,7 @@ export const Airlines: Record<string, string> = {
   AA: "American Airlines",
   DL: "Delta Air Lines",
   RJ: "Royal Jordanian",
+  D8: "AirAsia X",
   MS: "EgyptAir",
   ME: "Middle East Airlines",
   J9: "Jazeera Airways",

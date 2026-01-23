@@ -21,7 +21,7 @@ export function useFlightSearch(params: SearchParams) {
       }
 
       const json = await res.json();
-      return json.flights; // 👈 Array فقط
+      return json.flights;
     },
     enabled: Boolean(params.origin && params.destination && params.date),
   });
