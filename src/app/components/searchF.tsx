@@ -232,7 +232,7 @@ export default function SearchFL() {
           {/* Results */}
           <div className="flex-1 mt-4 md:mt-0">
             {isLoading && (
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4 mt-4">
                 {Array.from({ length: 4 }).map((_, i) => (
                   <CardSkeleton key={i} />
                 ))}
